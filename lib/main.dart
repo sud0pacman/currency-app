@@ -3,7 +3,6 @@ import 'package:valyuta_kursi/data/source/remote/service/api_service.dart';
 import 'package:valyuta_kursi/ui/screens/currency/currency_screen.dart';
 
 void main() async{
-
   runApp(const MyApp());
 }
 

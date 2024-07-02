@@ -35,13 +35,28 @@ class ApiService {
       rethrow;
     }
   }
-  
-  
-  Future<List<CurrencyModel>> getCurrencyByDate(String date) async{
-    var response = await _dio.get("arkhiv-kursov-valyut/json/all/$date/");
 
-    return (response.data as List)
-    .map((element) => CurrencyModel.fromJson(element))
-    .toList();
+  Future<List<CurrencyModel>> getCurrencyByDate(String date) async {
+    try {
+      _dio.interceptors.add(
+        TalkerDioLogger(
+          settings: const TalkerDioLoggerSettings(
+            printRequestHeaders: true,
+            printRequestData: true,
+            printResponseData: true,
+            printResponseHeaders: true,
+            printResponseMessage: true,
+          ),
+        ),
+      );
+      print("****************************   Api getCurrencyByDate $date");
+      var response = await _dio.get("arkhiv-kursov-valyut/json/all/$date/");
+
+      return (response.data as List)
+          .map((element) => CurrencyModel.fromJson(element))
+          .toList();
+    } on DioException {
+      rethrow;
+    }
   }
 }
